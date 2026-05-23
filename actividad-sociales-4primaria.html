@@ -318,6 +318,11 @@
       text-align: center;
     }
 
+    button.stat-chip {
+      cursor: pointer;
+      font-family: inherit;
+    }
+
     .progress-wrap {
       margin-bottom: 8px;
       background: #e2e8f0;
@@ -772,6 +777,11 @@
             <button id="soundToggle" class="toggle active" aria-label="Activar o desactivar sonidos"></button>
             <span id="soundLabel">🔊 Sonidos: Activados</span>
           </div>
+
+          <div class="switch-row">
+            <button id="timerToggleStart" class="toggle active" aria-label="Activar o desactivar temporizador"></button>
+            <span id="timerLabelStart">⏱ Temporizador: Activado</span>
+          </div>
         </div>
 
         <div class="panel">
@@ -806,6 +816,7 @@
           <div class="stat-chip" id="modeChip">Modo: -</div>
           <div class="stat-chip" id="scoreChip">Puntos: 0</div>
           <div class="stat-chip" id="qChip">Pregunta 0/0</div>
+          <button id="hudTimerToggle" class="stat-chip" type="button">⏱ Timer ON</button>
         </div>
         <div class="timer-wrap" id="timerWrap" aria-label="Temporizador">
           <div class="timer-bar" id="timerBar"></div>
@@ -1533,6 +1544,7 @@
     const appState = {
       mode: null,
       soundOn: true,
+      timerEnabled: true,
       questions: [],
       currentIndex: 0,
       score: 0,
@@ -1579,6 +1591,8 @@
 
     const soundToggle = $("soundToggle");
     const soundLabel = $("soundLabel");
+    const timerToggleStart = $("timerToggleStart");
+    const timerLabelStart = $("timerLabelStart");
 
     const btnReview = $("btnReview");
     const btnExam = $("btnExam");
@@ -1589,6 +1603,7 @@
     const modeChip = $("modeChip");
     const scoreChip = $("scoreChip");
     const qChip = $("qChip");
+    const hudTimerToggle = $("hudTimerToggle");
     const progressBar = $("progressBar");
 
     const timerWrap = $("timerWrap");
@@ -1638,6 +1653,26 @@
     function soundWrong() {
       playTone(220, 0.12, "sawtooth", 0.05);
       setTimeout(() => playTone(180, 0.14, "sawtooth", 0.045), 80);
+    }
+
+    function syncTimerUI() {
+      timerToggleStart.classList.toggle("active", appState.timerEnabled);
+      timerLabelStart.textContent = appState.timerEnabled
+        ? "⏱ Temporizador: Activado"
+        : "⏱ Temporizador: Desactivado";
+
+      hudTimerToggle.textContent = appState.timerEnabled ? "⏱ Timer ON" : "⏱ Timer OFF";
+      hudTimerToggle.style.background = appState.timerEnabled ? "#ecfeff" : "#f1f5f9";
+      hudTimerToggle.style.borderColor = appState.timerEnabled ? "#a5f3fc" : "#cbd5e1";
+      hudTimerToggle.style.color = appState.timerEnabled ? "#0f766e" : "#334155";
+    }
+
+    function setTimerEnabled(enabled) {
+      appState.timerEnabled = enabled;
+      if (!enabled) {
+        stopQuestionTimer();
+      }
+      syncTimerUI();
     }
 
     // =========================
@@ -1806,7 +1841,7 @@
 
       // En modo examen, casi todas las preguntas tienen tiempo.
       const timedModes = ["exam", "marathon", "geo", "formula"];
-      if (timedModes.includes(appState.mode) && !["matching", "dnd", "multi", "order"].includes(q.type)) {
+      if (appState.timerEnabled && timedModes.includes(appState.mode) && !["matching", "dnd", "multi", "order"].includes(q.type)) {
         const seconds = q.type === "rapid" ? 12 : (appState.mode === "marathon" ? 16 : 18);
         startQuestionTimer(seconds, () => {
           autoFailByTime(q, feedback, wrapper);
@@ -2555,9 +2590,11 @@
 
       // Temporizador en rápida también en modo repaso.
       const quickSeconds = appState.mode === "review" ? 10 : 8;
-      startQuestionTimer(quickSeconds, () => {
-        autoFailByTime(q, feedback, wrapper);
-      });
+      if (appState.timerEnabled) {
+        startQuestionTimer(quickSeconds, () => {
+          autoFailByTime(q, feedback, wrapper);
+        });
+      }
 
       renderMCQ(q, wrapper, feedback);
     }
@@ -2637,21 +2674,25 @@
       card.appendChild(feedback);
       questionContainer.appendChild(card);
 
-      // Temporizador del reto
-      timerWrap.style.display = "block";
-      let left = 9;
-      timerBar.style.width = "100%";
+      // Temporizador del reto (opcional)
+      if (appState.timerEnabled) {
+        timerWrap.style.display = "block";
+        let left = 9;
+        timerBar.style.width = "100%";
 
-      appState.retoTimer = setInterval(() => {
-        left -= 1;
-        timerBar.style.width = `${Math.max(0, (left / 9) * 100)}%`;
-        if (left <= 0) {
-          clearInterval(appState.retoTimer);
-          soundWrong();
-          appState.retoRound += 1;
-          renderRetoRound();
-        }
-      }, 1000);
+        appState.retoTimer = setInterval(() => {
+          left -= 1;
+          timerBar.style.width = `${Math.max(0, (left / 9) * 100)}%`;
+          if (left <= 0) {
+            clearInterval(appState.retoTimer);
+            soundWrong();
+            appState.retoRound += 1;
+            renderRetoRound();
+          }
+        }, 1000);
+      } else {
+        timerWrap.style.display = "none";
+      }
     }
 
     // =========================
@@ -2721,6 +2762,14 @@
       soundLabel.textContent = appState.soundOn ? "🔊 Sonidos: Activados" : "🔈 Sonidos: Desactivados";
     });
 
+    timerToggleStart.addEventListener("click", () => {
+      setTimerEnabled(!appState.timerEnabled);
+    });
+
+    hudTimerToggle.addEventListener("click", () => {
+      setTimerEnabled(!appState.timerEnabled);
+    });
+
     btnReview.addEventListener("click", () => startGame("review"));
     btnExam.addEventListener("click", () => startGame("exam"));
     btnGeo.addEventListener("click", () => startGame("geo"));
@@ -2735,6 +2784,7 @@
 
     // Estado inicial seguro
     soundToggle.classList.add("active");
+    setTimerEnabled(true);
   </script>
 </body>
 </html>
