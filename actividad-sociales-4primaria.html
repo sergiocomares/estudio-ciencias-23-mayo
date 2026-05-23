@@ -383,6 +383,12 @@
       background: #f0fdfa;
     }
 
+    .option-btn.selected {
+      border-color: #14b8a6;
+      background: #ccfbf1;
+      color: #0f766e;
+    }
+
     .option-btn.correct {
       border-color: #4ade80;
       background: #dcfce7;
@@ -593,6 +599,51 @@
       margin-top: 6px;
     }
 
+    .order-wrap {
+      margin-top: 10px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .order-item {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 8px;
+      background: #fefce8;
+      border: 1px solid #fde68a;
+      border-radius: 12px;
+      padding: 10px;
+      font-weight: 800;
+      color: #92400e;
+    }
+
+    .order-pos {
+      min-width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: #f59e0b;
+      color: #fff;
+      font-size: 0.92rem;
+    }
+
+    .order-controls {
+      display: flex;
+      gap: 6px;
+    }
+
+    .mini-btn {
+      border-radius: 10px;
+      background: #fff;
+      border: 1px solid #f59e0b;
+      color: #b45309;
+      font-weight: 800;
+      padding: 6px 8px;
+      min-width: 34px;
+    }
+
     /* =========================
        4) PANTALLA FINAL
        ========================= */
@@ -713,6 +764,8 @@
             <div class="feature-item">👨‍👩‍👧‍👦 Población y densidad</div>
             <div class="feature-item">➕ Saldo natural y migratorio</div>
             <div class="feature-item">🗺 Mapa interactivo de España</div>
+            <div class="feature-item">✅ Selección múltiple de ideas clave</div>
+            <div class="feature-item">🔢 Ordenar procesos paso a paso</div>
           </div>
 
           <div class="switch-row">
@@ -728,11 +781,17 @@
           <div class="cta-row">
             <button id="btnReview" class="btn btn-primary btn-block">⚡ Modo Repaso Rápido</button>
             <button id="btnExam" class="btn btn-accent btn-block">📝 Modo Examen</button>
+            <button id="btnGeo" class="btn btn-soft btn-block">🗺 Modo Geografía</button>
+            <button id="btnFormula" class="btn btn-soft btn-block">🧮 Modo Fórmulas</button>
+            <button id="btnMarathon" class="btn btn-primary btn-block">🏁 Modo Maratón</button>
           </div>
 
           <p class="small" style="margin-top:10px;">
             <strong>Repaso:</strong> menos preguntas, más ayuda.<br />
-            <strong>Examen:</strong> más preguntas y tiempo limitado.
+            <strong>Examen:</strong> más preguntas y tiempo limitado.<br />
+            <strong>Geografía:</strong> foco en territorio, límites y mapa.<br />
+            <strong>Fórmulas:</strong> saldo natural, migratorio y crecimiento real.<br />
+            <strong>Maratón:</strong> sesión larga con mezcla completa.
           </p>
         </div>
       </div>
@@ -1140,6 +1199,105 @@
       }
     ];
 
+    const reviewPracticeBank = [
+      {
+        type: "multi",
+        prompt: "Marca TODOS los límites naturales de España.",
+        options: ["Mar Cantábrico", "Mar Mediterráneo", "Portugal", "Océano Atlántico"],
+        correctIndices: [0, 1, 3],
+        explanation: "Límites naturales: mares y océanos. Portugal es límite político."
+      },
+      {
+        type: "multi",
+        prompt: "Marca las instituciones de una comunidad autónoma.",
+        options: ["Parlamento", "Presidencia", "Gobierno autonómico", "Diputación provincial"],
+        correctIndices: [0, 1, 2],
+        explanation: "En comunidad autónoma están Parlamento, Presidencia y Gobierno autonómico."
+      },
+      {
+        type: "multi",
+        prompt: "Marca cuáles suelen ser zonas poco pobladas.",
+        options: ["Interior rural", "Áreas de montaña", "Grandes ciudades", "Costas con servicios"],
+        correctIndices: [0, 1],
+        explanation: "Las zonas rurales y de montaña suelen tener menos población."
+      },
+      {
+        type: "multi",
+        prompt: "Marca datos relacionados con la población.",
+        options: ["Natalidad", "Esperanza de vida", "Congreso", "Densidad"],
+        correctIndices: [0, 1, 3],
+        explanation: "Natalidad, esperanza de vida y densidad son conceptos demográficos."
+      },
+      {
+        type: "order",
+        prompt: "Ordena de menor a mayor nivel territorial.",
+        sequence: ["Municipio", "Provincia", "Comunidad autónoma"],
+        explanation: "El municipio es el nivel más pequeño, luego provincia y luego comunidad autónoma."
+      },
+      {
+        type: "order",
+        prompt: "Ordena las operaciones para obtener crecimiento real.",
+        sequence: [
+          "Calcular saldo natural (natalidad - mortalidad)",
+          "Calcular saldo migratorio (inmigración - emigración)",
+          "Sumar ambos resultados"
+        ],
+        explanation: "Primero calculas cada saldo y después los sumas para el crecimiento real."
+      },
+      {
+        type: "order",
+        prompt: "Ordena de mayor escala a menor escala territorial.",
+        sequence: ["Comunidad autónoma", "Provincia", "Municipio"],
+        explanation: "La comunidad autónoma incluye provincias, y las provincias incluyen municipios."
+      },
+      {
+        type: "order",
+        prompt: "Ordena para calcular la densidad de población.",
+        sequence: [
+          "Conocer el número de habitantes",
+          "Conocer la superficie en km²",
+          "Dividir habitantes entre superficie"
+        ],
+        explanation: "Densidad = habitantes / superficie en km²."
+      },
+      {
+        type: "intruder",
+        prompt: "Detecta la frase intrusa (la incorrecta).",
+        options: [
+          "El municipio tiene ayuntamiento",
+          "La provincia incluye varios municipios",
+          "El censo se actualiza cada año",
+          "La comunidad autónoma puede tener Parlamento"
+        ],
+        answer: 2,
+        explanation: "En el enfoque escolar, el censo se actualiza cada 10 años."
+      },
+      {
+        type: "intruder",
+        prompt: "Detecta la frase intrusa sobre límites de España.",
+        options: [
+          "Al este está el mar Mediterráneo",
+          "Al oeste está Portugal",
+          "Al norte está Italia",
+          "Al sur también está el Atlántico"
+        ],
+        answer: 2,
+        explanation: "Al norte limita con Francia, Andorra y mar Cantábrico."
+      },
+      {
+        type: "intruder",
+        prompt: "Detecta la frase intrusa sobre instituciones.",
+        options: [
+          "Las Cortes aprueban leyes",
+          "El Gobierno aplica leyes",
+          "Los tribunales juzgan",
+          "El padrón aprueba presupuestos"
+        ],
+        answer: 3,
+        explanation: "El padrón es un registro de habitantes, no una institución legislativa."
+      }
+    ];
+
     const retoBank = [
       {
         prompt: "Reto: ¿Dónde están Ceuta y Melilla?",
@@ -1224,10 +1382,149 @@
       return formulas;
     }
 
-    function buildMixedQuestionPool() {
+    function buildMixedQuestionPool(mode) {
       const formulaQuestions = generateFormulaQuestions(9);
       const rapidQuestions = rapidBank.map((q) => ({ ...q, type: "rapid" }));
-      return shuffle([...baseQuestionBank, ...formulaQuestions, ...rapidQuestions]);
+      const extraReview = mode === "review" ? reviewPracticeBank : randomPick(reviewPracticeBank, 3);
+      return shuffle([...baseQuestionBank, ...formulaQuestions, ...rapidQuestions, ...extraReview]);
+    }
+
+    function buildGeoPool() {
+      const geoRegex = /(territorio|l[ií]mite|mar|oc[eé]ano|islas|canarias|baleares|ceuta|melilla|densidad|poblada|españa vaciada|norte|sur|este|oeste|mapa|zona)/i;
+      const fromBase = baseQuestionBank.filter((q) => {
+        if (q.type === "map" || q.type === "dnd") return true;
+        return geoRegex.test(q.prompt || "");
+      });
+
+      const fromReview = reviewPracticeBank.filter((q) => {
+        if (["order", "multi", "intruder"].includes(q.type)) {
+          return geoRegex.test(q.prompt || "") || (q.explanation && geoRegex.test(q.explanation));
+        }
+        return false;
+      });
+
+      return shuffle([...fromBase, ...fromReview, ...randomPick(rapidBank.map((q) => ({ ...q, type: "rapid" })), 3)]);
+    }
+
+    function buildFormulaPool() {
+      const formulaCore = generateFormulaQuestions(18);
+      const formulaConcept = [
+        {
+          type: "mcq",
+          prompt: "¿Qué operación corresponde al saldo natural?",
+          options: ["Inmigración - emigración", "Natalidad - mortalidad", "Habitantes + superficie", "Mortalidad - natalidad"],
+          answer: 1,
+          explanation: "Saldo natural = natalidad - mortalidad."
+        },
+        {
+          type: "mcq",
+          prompt: "¿Qué operación corresponde al crecimiento real?",
+          options: ["Saldo natural + saldo migratorio", "Natalidad + mortalidad", "Inmigración + emigración", "Habitantes / superficie"],
+          answer: 0,
+          explanation: "Crecimiento real = saldo natural + saldo migratorio."
+        },
+        {
+          type: "fill",
+          prompt: "Completa: saldo natural = natalidad - ____.",
+          answers: ["mortalidad"],
+          explanation: "Se resta la mortalidad a la natalidad."
+        },
+        {
+          type: "fill",
+          prompt: "Completa: crecimiento real = saldo natural + saldo ____.",
+          answers: ["migratorio"],
+          explanation: "El crecimiento real suma ambos saldos."
+        },
+        {
+          type: "order",
+          prompt: "Ordena para calcular el saldo migratorio.",
+          sequence: [
+            "Anotar inmigración",
+            "Anotar emigración",
+            "Restar emigración a inmigración"
+          ],
+          explanation: "Saldo migratorio = inmigración - emigración."
+        },
+        {
+          type: "intruder",
+          prompt: "Detecta la frase intrusa sobre fórmulas.",
+          options: [
+            "Saldo natural = natalidad - mortalidad",
+            "Saldo migratorio = inmigración - emigración",
+            "Crecimiento real = suma de saldos",
+            "Densidad = natalidad / mortalidad"
+          ],
+          answer: 3,
+          explanation: "Densidad = habitantes / superficie en km²."
+        }
+      ];
+
+      const formulaRapid = rapidBank
+        .filter((q) => /(saldo|densidad|natalidad|migratorio)/i.test(q.prompt))
+        .map((q) => ({ ...q, type: "rapid" }));
+
+      return shuffle([...formulaCore, ...formulaConcept, ...formulaRapid]);
+    }
+
+    function ensurePoolSize(pool, size, fallbackPool) {
+      const result = [...pool];
+      while (result.length < size) {
+        result.push(...shuffle(fallbackPool));
+      }
+      return shuffle(result).slice(0, size);
+    }
+
+    function getModeConfig(mode) {
+      if (mode === "review") {
+        const targetCount = 20;
+        const fallback = buildMixedQuestionPool(mode);
+        return {
+          label: "Repaso",
+          targetCount,
+          questions: ensurePoolSize(fallback, targetCount, fallback)
+        };
+      }
+
+      if (mode === "exam") {
+        const targetCount = 28;
+        const fallback = buildMixedQuestionPool(mode);
+        return {
+          label: "Examen",
+          targetCount,
+          questions: ensurePoolSize(fallback, targetCount, fallback)
+        };
+      }
+
+      if (mode === "geo") {
+        const targetCount = 22;
+        const geoPool = buildGeoPool();
+        const fallback = buildMixedQuestionPool("review");
+        return {
+          label: "Geografía",
+          targetCount,
+          questions: ensurePoolSize(geoPool, targetCount, fallback)
+        };
+      }
+
+      if (mode === "formula") {
+        const targetCount = 20;
+        const formulaPool = buildFormulaPool();
+        const fallback = buildMixedQuestionPool("review");
+        return {
+          label: "Fórmulas",
+          targetCount,
+          questions: ensurePoolSize(formulaPool, targetCount, fallback)
+        };
+      }
+
+      const targetCount = 36;
+      const mixed = buildMixedQuestionPool("exam");
+      const bonus = [...buildGeoPool(), ...buildFormulaPool()];
+      return {
+        label: "Maratón",
+        targetCount,
+        questions: ensurePoolSize([...mixed, ...bonus], targetCount, mixed)
+      };
     }
 
     // =========================
@@ -1285,6 +1582,9 @@
 
     const btnReview = $("btnReview");
     const btnExam = $("btnExam");
+    const btnGeo = $("btnGeo");
+    const btnFormula = $("btnFormula");
+    const btnMarathon = $("btnMarathon");
 
     const modeChip = $("modeChip");
     const scoreChip = $("scoreChip");
@@ -1345,12 +1645,11 @@
     // =========================
     function startGame(mode) {
       clearAllTimers();
-
-      const pool = buildMixedQuestionPool();
-      const targetCount = mode === "review" ? 15 : 25;
+      const config = getModeConfig(mode);
+      const targetCount = config.targetCount;
 
       appState.mode = mode;
-      appState.questions = pool.slice(0, targetCount);
+      appState.questions = config.questions;
       appState.currentIndex = 0;
       appState.score = 0;
       appState.possibleScore = targetCount * 10;
@@ -1367,7 +1666,7 @@
       appState.retoScore = 0;
       appState.retoQuestions = randomPick(retoBank, 5);
 
-      modeChip.textContent = `Modo: ${mode === "review" ? "Repaso" : "Examen"}`;
+      modeChip.textContent = `Modo: ${config.label}`;
       startScreen.classList.add("hidden");
       endScreen.classList.add("hidden");
       gameScreen.classList.remove("hidden");
@@ -1498,13 +1797,17 @@
       if (q.type === "map") renderMap(q, wrapper, feedback);
       if (q.type === "formula") renderFormula(q, wrapper, feedback);
       if (q.type === "rapid") renderRapid(q, wrapper, feedback);
+      if (q.type === "multi") renderMultiSelect(q, wrapper, feedback);
+      if (q.type === "order") renderOrder(q, wrapper, feedback);
+      if (q.type === "intruder") renderIntruder(q, wrapper, feedback);
 
       wrapper.appendChild(feedback);
       questionContainer.appendChild(wrapper);
 
       // En modo examen, casi todas las preguntas tienen tiempo.
-      if (appState.mode === "exam" && q.type !== "matching" && q.type !== "dnd") {
-        const seconds = q.type === "rapid" ? 12 : 18;
+      const timedModes = ["exam", "marathon", "geo", "formula"];
+      if (timedModes.includes(appState.mode) && !["matching", "dnd", "multi", "order"].includes(q.type)) {
+        const seconds = q.type === "rapid" ? 12 : (appState.mode === "marathon" ? 16 : 18);
         startQuestionTimer(seconds, () => {
           autoFailByTime(q, feedback, wrapper);
         });
@@ -1686,6 +1989,220 @@
 
       wrapper.appendChild(row);
       wrapper.appendChild(note);
+    }
+
+    function renderMultiSelect(q, wrapper, feedback) {
+      const optionsWrap = document.createElement("div");
+      optionsWrap.className = "options";
+      const selected = new Set();
+
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement("button");
+        btn.className = "option-btn";
+        btn.textContent = opt;
+
+        btn.addEventListener("click", () => {
+          if (appState.waitingNext) return;
+          if (selected.has(idx)) {
+            selected.delete(idx);
+            btn.classList.remove("selected");
+          } else {
+            selected.add(idx);
+            btn.classList.add("selected");
+          }
+        });
+
+        optionsWrap.appendChild(btn);
+      });
+
+      const checkBtn = document.createElement("button");
+      checkBtn.className = "btn btn-accent";
+      checkBtn.style.marginTop = "10px";
+      checkBtn.textContent = "Comprobar selección";
+
+      checkBtn.addEventListener("click", () => {
+        if (appState.waitingNext) return;
+        stopQuestionTimer();
+
+        const correctSet = new Set(q.correctIndices);
+        let hit = 0;
+        let fail = 0;
+
+        selected.forEach((i) => {
+          if (correctSet.has(i)) hit += 1;
+          else fail += 1;
+        });
+
+        const exact =
+          selected.size === correctSet.size &&
+          [...selected].every((i) => correctSet.has(i));
+
+        const scoreBase = Math.max(0, hit - fail);
+        const points = exact ? 10 : Math.round((scoreBase / correctSet.size) * 10);
+
+        applyScore(exact, points, q.type);
+
+        optionsWrap.querySelectorAll("button").forEach((b, i) => {
+          b.disabled = true;
+          if (correctSet.has(i)) b.classList.add("correct");
+          if (selected.has(i) && !correctSet.has(i)) b.classList.add("wrong");
+        });
+
+        setFeedback(
+          feedback,
+          exact,
+          exact ? `✅ ${getPositiveMessage()}` : `🧠 ${getTryMessage()}`,
+          `${q.explanation} Aciertos marcados: ${hit}/${correctSet.size}.`
+        );
+
+        checkBtn.disabled = true;
+        lockAndShowNext();
+      });
+
+      const note = document.createElement("p");
+      note.className = "muted-note";
+      note.textContent = "Puedes elegir varias respuestas antes de comprobar.";
+
+      wrapper.appendChild(optionsWrap);
+      wrapper.appendChild(note);
+      wrapper.appendChild(checkBtn);
+    }
+
+    function renderOrder(q, wrapper, feedback) {
+      let currentOrder = shuffle([...q.sequence]);
+
+      const orderWrap = document.createElement("div");
+      orderWrap.className = "order-wrap";
+
+      const drawOrder = () => {
+        orderWrap.innerHTML = "";
+
+        currentOrder.forEach((text, idx) => {
+          const row = document.createElement("div");
+          row.className = "order-item";
+
+          const pos = document.createElement("span");
+          pos.className = "order-pos";
+          pos.textContent = String(idx + 1);
+
+          const content = document.createElement("span");
+          content.textContent = text;
+
+          const controls = document.createElement("div");
+          controls.className = "order-controls";
+
+          const up = document.createElement("button");
+          up.className = "mini-btn";
+          up.textContent = "⬆";
+          up.disabled = idx === 0;
+
+          const down = document.createElement("button");
+          down.className = "mini-btn";
+          down.textContent = "⬇";
+          down.disabled = idx === currentOrder.length - 1;
+
+          up.addEventListener("click", () => {
+            if (appState.waitingNext || idx === 0) return;
+            [currentOrder[idx - 1], currentOrder[idx]] = [currentOrder[idx], currentOrder[idx - 1]];
+            drawOrder();
+          });
+
+          down.addEventListener("click", () => {
+            if (appState.waitingNext || idx === currentOrder.length - 1) return;
+            [currentOrder[idx + 1], currentOrder[idx]] = [currentOrder[idx], currentOrder[idx + 1]];
+            drawOrder();
+          });
+
+          controls.appendChild(up);
+          controls.appendChild(down);
+          row.appendChild(pos);
+          row.appendChild(content);
+          row.appendChild(controls);
+          orderWrap.appendChild(row);
+        });
+      };
+
+      drawOrder();
+
+      const checkBtn = document.createElement("button");
+      checkBtn.className = "btn btn-accent";
+      checkBtn.style.marginTop = "10px";
+      checkBtn.textContent = "Comprobar orden";
+
+      checkBtn.addEventListener("click", () => {
+        if (appState.waitingNext) return;
+        stopQuestionTimer();
+
+        let matches = 0;
+        currentOrder.forEach((item, idx) => {
+          if (item === q.sequence[idx]) matches += 1;
+        });
+
+        const ok = matches === q.sequence.length;
+        const points = Math.round((matches / q.sequence.length) * 10);
+        applyScore(ok, points, q.type);
+
+        setFeedback(
+          feedback,
+          ok,
+          ok ? `🧩 ${getPositiveMessage()}` : `📚 ${getTryMessage()}`,
+          `${q.explanation} Posiciones correctas: ${matches}/${q.sequence.length}.`
+        );
+
+        disableButtons(orderWrap);
+        checkBtn.disabled = true;
+        lockAndShowNext();
+      });
+
+      const note = document.createElement("p");
+      note.className = "muted-note";
+      note.textContent = "Usa las flechas para colocar cada paso en su lugar.";
+
+      wrapper.appendChild(orderWrap);
+      wrapper.appendChild(note);
+      wrapper.appendChild(checkBtn);
+    }
+
+    function renderIntruder(q, wrapper, feedback) {
+      const clue = document.createElement("p");
+      clue.className = "pill";
+      clue.textContent = "🕵️ Elige la frase que NO encaja";
+      wrapper.appendChild(clue);
+
+      const optionsWrap = document.createElement("div");
+      optionsWrap.className = "options";
+
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement("button");
+        btn.className = "option-btn";
+        btn.textContent = opt;
+
+        btn.addEventListener("click", () => {
+          if (appState.waitingNext) return;
+          stopQuestionTimer();
+          const ok = idx === q.answer;
+
+          optionsWrap.querySelectorAll("button").forEach((b, i) => {
+            b.disabled = true;
+            if (i === q.answer) b.classList.add("correct");
+            if (i === idx && i !== q.answer) b.classList.add("wrong");
+          });
+
+          applyScore(ok, 10, q.type);
+          setFeedback(
+            feedback,
+            ok,
+            ok ? `🔍 ${getPositiveMessage()}` : `❗ ${getTryMessage()}`,
+            q.explanation
+          );
+
+          lockAndShowNext();
+        });
+
+        optionsWrap.appendChild(btn);
+      });
+
+      wrapper.appendChild(optionsWrap);
     }
 
     function renderMatching(q, wrapper, feedback) {
@@ -2206,6 +2723,9 @@
 
     btnReview.addEventListener("click", () => startGame("review"));
     btnExam.addEventListener("click", () => startGame("exam"));
+    btnGeo.addEventListener("click", () => startGame("geo"));
+    btnFormula.addEventListener("click", () => startGame("formula"));
+    btnMarathon.addEventListener("click", () => startGame("marathon"));
 
     btnNext.addEventListener("click", nextQuestion);
     btnRestart.addEventListener("click", restartCurrentMode);
