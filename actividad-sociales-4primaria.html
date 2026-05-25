@@ -777,6 +777,7 @@
             <div class="feature-item">⚖ Instituciones del Estado</div>
             <div class="feature-item">👨‍👩‍👧‍👦 Población y densidad</div>
             <div class="feature-item">➕ Saldo natural y migratorio</div>
+            <div class="feature-item">🗣 Wordbank inglés-español</div>
             <div class="feature-item">🗺 Mapa interactivo de España</div>
             <div class="feature-item">✅ Selección múltiple de ideas clave</div>
             <div class="feature-item">🔢 Ordenar procesos paso a paso</div>
@@ -802,6 +803,7 @@
             <button id="btnExam" class="btn btn-accent btn-block">📝 Modo Examen</button>
             <button id="btnGeo" class="btn btn-soft btn-block">🗺 Modo Geografía</button>
             <button id="btnFormula" class="btn btn-soft btn-block">🧮 Modo Fórmulas</button>
+            <button id="btnWordbank" class="btn btn-soft btn-block">🗣 Modo Wordbank</button>
             <button id="btnMarathon" class="btn btn-primary btn-block">🏁 Modo Maratón</button>
           </div>
 
@@ -810,6 +812,7 @@
             <strong>Examen:</strong> más preguntas y tiempo limitado.<br />
             <strong>Geografía:</strong> foco en territorio, límites y mapa.<br />
             <strong>Fórmulas:</strong> saldo natural, migratorio y crecimiento real.<br />
+            <strong>Wordbank:</strong> vocabulario en inglés y español para traducir y relacionar.<br />
             <strong>Maratón:</strong> sesión larga con mezcla completa.
           </p>
         </div>
@@ -1002,6 +1005,55 @@
         answer: 2,
         explanation: "Las costas y grandes ciudades suelen concentrar más población."
       },
+      {
+        type: "mcq",
+        prompt: "¿Cada cuánto tiempo se publica el padrón municipal?",
+        options: ["Todos los años", "Cada 10 años", "Cada 5 años", "Solo cuando hay elecciones"],
+        answer: 0,
+        explanation: "El padrón municipal se publica todos los años."
+      },
+      {
+        type: "mcq",
+        prompt: "¿Qué operación se usa para calcular el crecimiento real?",
+        options: ["Natalidad - mortalidad", "Inmigración - emigración", "Saldo natural + saldo migratorio", "Habitantes / superficie"],
+        answer: 2,
+        explanation: "El crecimiento real es la suma del saldo natural y del saldo migratorio."
+      },
+      {
+        type: "mcq",
+        prompt: "En la actualidad, la población de España es de...",
+        options: ["Algo más de 48 millones de personas", "Unos 20 millones de personas", "Más de 100 millones de personas", "Menos de 10 millones de personas"],
+        answer: 0,
+        explanation: "Según el enfoque del tema, España tiene algo más de 48 millones de personas."
+      },
+      {
+        type: "mcq",
+        prompt: "¿Por qué se dice que la población española está envejecida?",
+        options: ["Porque hay más menores de 16 años", "Porque hay más personas mayores de 65 años que menores de 16", "Porque toda la población vive en pueblos", "Porque nacen muchas personas cada año"],
+        answer: 1,
+        explanation: "Se considera envejecida porque hay más personas mayores de 65 años que menores de 16."
+      },
+      {
+        type: "mcq",
+        prompt: "¿Qué grupo tiene una esperanza de vida mayor en España?",
+        options: ["Los hombres", "Las mujeres", "Los niños", "Es igual para todos"],
+        answer: 1,
+        explanation: "En España la esperanza de vida es más alta en las mujeres que en los hombres."
+      },
+      {
+        type: "mcq",
+        prompt: "¿Cómo es el saldo migratorio de España en la actualidad?",
+        options: ["Negativo", "Positivo", "Cero", "No se puede calcular"],
+        answer: 1,
+        explanation: "Es positivo porque llegan más personas de las que se marchan."
+      },
+      {
+        type: "mcq",
+        prompt: "¿Qué zonas suelen ser poco pobladas en España?",
+        options: ["Las costas y Madrid", "Las capitales con industria", "Las provincias del interior y zonas de montaña", "Las islas con turismo"],
+        answer: 2,
+        explanation: "Las provincias del interior, salvo Madrid, y muchas zonas de montaña tienen poca población."
+      },
 
       {
         type: "tf",
@@ -1051,6 +1103,24 @@
         answer: false,
         explanation: "No: también recoge derechos, deberes e instituciones."
       },
+      {
+        type: "tf",
+        prompt: "Si el saldo natural es negativo y el saldo migratorio es positivo, el crecimiento real puede seguir siendo positivo.",
+        answer: true,
+        explanation: "Sí, depende de la suma de ambos saldos."
+      },
+      {
+        type: "tf",
+        prompt: "La esperanza de vida es la cantidad de años que se espera que viva una persona.",
+        answer: true,
+        explanation: "Esa es la definición de esperanza de vida."
+      },
+      {
+        type: "tf",
+        prompt: "La llamada España vaciada corresponde a zonas con mucha población joven.",
+        answer: false,
+        explanation: "No, se refiere a zonas con poca población y población envejecida."
+      },
 
       {
         type: "fill",
@@ -1088,6 +1158,18 @@
         answers: ["vaciada"],
         explanation: "Se conoce como España vaciada."
       },
+      {
+        type: "fill",
+        prompt: "Completa: El crecimiento real puede ser positivo o ____.",
+        answers: ["negativo"],
+        explanation: "El crecimiento real puede ser positivo o negativo."
+      },
+      {
+        type: "fill",
+        prompt: "Completa: La esperanza de vida de las mujeres en España es de ____ años.",
+        answers: ["86"],
+        explanation: "En el tema se indica una esperanza de vida de 86 años para las mujeres."
+      },
 
       {
         type: "matching",
@@ -1118,6 +1200,16 @@
           { left: "Comunidad autónoma", right: "Parlamento y Gobierno autonómico" }
         ],
         explanation: "Perfecto: municipio, provincia y comunidad no son lo mismo."
+      },
+      {
+        type: "matching",
+        prompt: "Relaciona cada cálculo de población con su fórmula.",
+        pairs: [
+          { left: "Saldo natural", right: "Natalidad - mortalidad" },
+          { left: "Saldo migratorio", right: "Inmigración - emigración" },
+          { left: "Crecimiento real", right: "Saldo natural + saldo migratorio" }
+        ],
+        explanation: "Cada cambio de población se calcula con una operación distinta."
       },
 
       {
@@ -1154,6 +1246,18 @@
           { label: "Interior rural", target: "Poco poblada" }
         ],
         explanation: "La población se concentra más en ciudades y costas."
+      },
+      {
+        type: "dnd",
+        prompt: "Arrastra cada factor según aumente o reduzca la población.",
+        categories: ["Aumenta la población", "Reduce la población"],
+        items: [
+          { label: "Natalidad", target: "Aumenta la población" },
+          { label: "Inmigración", target: "Aumenta la población" },
+          { label: "Mortalidad", target: "Reduce la población" },
+          { label: "Emigración", target: "Reduce la población" }
+        ],
+        explanation: "Nacimientos e inmigración aumentan la población; mortalidad y emigración la reducen."
       },
 
       {
@@ -1218,6 +1322,24 @@
         options: ["Negativo", "Cero", "Positivo", "Imposible"],
         answer: 2,
         explanation: "Es positivo cuando llegan más personas (inmigración)."
+      },
+      {
+        prompt: "Rápida: ¿Cada cuánto se actualiza el censo?",
+        options: ["Cada año", "Cada 10 años", "Cada 2 años", "Cada mes"],
+        answer: 1,
+        explanation: "El censo se actualiza cada 10 años."
+      },
+      {
+        prompt: "Rápida: ¿Qué territorio está al oeste de España?",
+        options: ["Italia", "Portugal", "Alemania", "Grecia"],
+        answer: 1,
+        explanation: "Al oeste de España está Portugal."
+      },
+      {
+        prompt: "Rápida: ¿Qué grupo vive más años de media en España?",
+        options: ["Los hombres", "Las mujeres", "Los bebés", "Todos igual"],
+        answer: 1,
+        explanation: "Las mujeres tienen una esperanza de vida mayor."
       }
     ];
 
@@ -1251,6 +1373,27 @@
         explanation: "Natalidad, esperanza de vida y densidad son conceptos demográficos."
       },
       {
+        type: "multi",
+        prompt: "Marca qué elementos pueden hacer positiva una población envejecida.",
+        options: ["Esperanza de vida elevada", "Natalidad baja", "Más personas menores de 16 que mayores de 65", "Muchas personas mayores de 65"],
+        correctIndices: [0, 1, 3],
+        explanation: "Una población envejecida suele tener esperanza de vida alta, natalidad baja y muchas personas mayores."
+      },
+      {
+        type: "multi",
+        prompt: "Marca los territorios o zonas que suelen estar muy poblados.",
+        options: ["Madrid", "Costas", "Áreas de regadío", "Zonas de alta montaña"],
+        correctIndices: [0, 1, 2],
+        explanation: "Madrid, las costas y las zonas con agricultura de regadío suelen concentrar más población."
+      },
+      {
+        type: "multi",
+        prompt: "Marca afirmaciones correctas sobre el crecimiento real.",
+        options: ["Puede ser positivo o negativo", "Es la suma del saldo natural y el migratorio", "Solo depende de la natalidad", "Si es positivo suelen necesitarse más servicios"],
+        correctIndices: [0, 1, 3],
+        explanation: "El crecimiento real suma ambos saldos y, si es positivo, suele exigir más servicios."
+      },
+      {
         type: "order",
         prompt: "Ordena de menor a mayor nivel territorial.",
         sequence: ["Municipio", "Provincia", "Comunidad autónoma"],
@@ -1281,6 +1424,16 @@
           "Dividir habitantes entre superficie"
         ],
         explanation: "Densidad = habitantes / superficie en km²."
+      },
+      {
+        type: "order",
+        prompt: "Ordena los pasos para saber el crecimiento real de una población.",
+        sequence: [
+          "Calcular el saldo natural",
+          "Calcular el saldo migratorio",
+          "Sumar ambos resultados"
+        ],
+        explanation: "El crecimiento real se obtiene sumando el saldo natural y el saldo migratorio."
       },
       {
         type: "intruder",
@@ -1317,6 +1470,18 @@
         ],
         answer: 3,
         explanation: "El padrón es un registro de habitantes, no una institución legislativa."
+      },
+      {
+        type: "intruder",
+        prompt: "Detecta la frase intrusa sobre la población de España.",
+        options: [
+          "El saldo natural es negativo",
+          "El saldo migratorio es positivo",
+          "La población española supera los 48 millones",
+          "La natalidad es mayor que la mortalidad"
+        ],
+        answer: 3,
+        explanation: "La natalidad es menor que la mortalidad, por eso el saldo natural es negativo."
       }
     ];
 
@@ -1355,7 +1520,40 @@
         prompt: "Reto: ¿Qué representa el rey?",
         options: ["Una provincia", "El Estado", "Un municipio", "Una diputación"],
         answer: 1
+      },
+      {
+        prompt: "Reto: ¿Qué se publica todos los años?",
+        options: ["El padrón municipal", "El censo", "La Constitución", "El Estatuto"],
+        answer: 0
+      },
+      {
+        prompt: "Reto: ¿Qué suma el crecimiento real?",
+        options: ["Natalidad y mortalidad", "Saldo natural y saldo migratorio", "Habitantes y superficie", "Municipios y provincias"],
+        answer: 1
       }
+    ];
+
+    const wordbankPairs = [
+      { en: "Natural border", es: "Límite natural" },
+      { en: "Political border", es: "Límite político" },
+      { en: "Territory", es: "Territorio" },
+      { en: "North", es: "Norte" },
+      { en: "West", es: "Oeste" },
+      { en: "East", es: "Este" },
+      { en: "South", es: "Sur" },
+      { en: "Autonomous community", es: "Comunidad autónoma" },
+      { en: "Municipality", es: "Municipio" },
+      { en: "Province", es: "Provincia" },
+      { en: "State", es: "Estado" },
+      { en: "Natural growth", es: "Saldo natural" },
+      { en: "Net migration", es: "Saldo migratorio" },
+      { en: "Population", es: "Población" },
+      { en: "Real growth", es: "Crecimiento real" },
+      { en: "Ageing population", es: "Población envejecida" },
+      { en: "Life expectancy", es: "Esperanza de vida" },
+      { en: "Densely populated", es: "Muy poblado" },
+      { en: "Population density", es: "Densidad de población" },
+      { en: "Sparsely populated", es: "Poco poblado" }
     ];
 
     // =========================
@@ -1488,6 +1686,81 @@
       return shuffle([...formulaCore, ...formulaConcept, ...formulaRapid]);
     }
 
+    function buildWordbankPool() {
+      const englishToSpanish = wordbankPairs.map((pair) => {
+        const wrongOptions = randomPick(
+          wordbankPairs.filter((candidate) => candidate.es !== pair.es).map((candidate) => candidate.es),
+          3
+        );
+        const options = shuffle([pair.es, ...wrongOptions]);
+
+        return {
+          type: "mcq",
+          prompt: `¿Cómo se dice en español: ${pair.en}?`,
+          options,
+          answer: options.indexOf(pair.es),
+          explanation: `${pair.en} se traduce como ${pair.es}.`
+        };
+      });
+
+      const spanishToEnglishRapid = wordbankPairs.map((pair) => {
+        const wrongOptions = randomPick(
+          wordbankPairs.filter((candidate) => candidate.en !== pair.en).map((candidate) => candidate.en),
+          4
+        );
+        const options = shuffle([pair.en, ...wrongOptions]);
+
+        return {
+          type: "rapid",
+          prompt: `Elige en inglés la palabra correcta para: ${pair.es}`,
+          options,
+          answer: options.indexOf(pair.en),
+          explanation: `${pair.es} en inglés es ${pair.en}.`
+        };
+      });
+
+      const fillInSpanish = randomPick(wordbankPairs, 6).map((pair) => ({
+        type: "fill",
+        prompt: `Escribe en español: ${pair.en}`,
+        answers: [pair.es],
+        explanation: `La traducción correcta es ${pair.es}.`
+      }));
+
+      const matchingBlocks = [0, 5, 10, 15].map((start) => ({
+        type: "matching",
+        prompt: "Relaciona cada palabra en inglés con su traducción al español.",
+        pairs: wordbankPairs.slice(start, start + 5).map((pair) => ({
+          left: pair.en,
+          right: pair.es
+        })),
+        explanation: "Relacionar ambas columnas ayuda a fijar el vocabulario."
+      }));
+
+      const wordbankConcept = [
+        {
+          type: "multi",
+          prompt: "Marca las palabras del wordbank relacionadas con población.",
+          options: ["Population", "Natural growth", "Life expectancy", "Political border"],
+          correctIndices: [0, 1, 2],
+          explanation: "Population, natural growth y life expectancy son conceptos de población."
+        },
+        {
+          type: "intruder",
+          prompt: "Detecta la pareja intrusa.",
+          options: [
+            "North = Norte",
+            "West = Oeste",
+            "Province = Provincial",
+            "Population = Población"
+          ],
+          answer: 2,
+          explanation: "Province se traduce como Provincia, no Provincial."
+        }
+      ];
+
+      return shuffle([...englishToSpanish, ...spanishToEnglishRapid, ...fillInSpanish, ...matchingBlocks, ...wordbankConcept]);
+    }
+
     function ensurePoolSize(pool, size, fallbackPool) {
       const result = [...pool];
       while (result.length < size) {
@@ -1539,9 +1812,19 @@
         };
       }
 
+      if (mode === "wordbank") {
+        const targetCount = 18;
+        const wordbankPool = buildWordbankPool();
+        return {
+          label: "Wordbank",
+          targetCount,
+          questions: ensurePoolSize(wordbankPool, targetCount, wordbankPool)
+        };
+      }
+
       const targetCount = 36;
       const mixed = buildMixedQuestionPool("exam");
-      const bonus = [...buildGeoPool(), ...buildFormulaPool()];
+      const bonus = [...buildGeoPool(), ...buildFormulaPool(), ...buildWordbankPool()];
       return {
         label: "Maratón",
         targetCount,
@@ -1869,6 +2152,21 @@
       return motivationalTry[Math.floor(Math.random() * motivationalTry.length)];
     }
 
+    function shouldAutoAdvance(ok) {
+      return appState.mode === "wordbank" && ok;
+    }
+
+    function finishQuestion(ok) {
+      lockAndShowNext();
+      if (!shouldAutoAdvance(ok)) return;
+
+      setTimeout(() => {
+        if (appState.waitingNext) {
+          nextQuestion();
+        }
+      }, 700);
+    }
+
     function lockAndShowNext() {
       appState.waitingNext = true;
       btnNext.classList.remove("hidden");
@@ -1949,7 +2247,7 @@
             q.explanation
           );
 
-          lockAndShowNext();
+          finishQuestion(ok);
         });
 
         optionsWrap.appendChild(btn);
@@ -1984,7 +2282,7 @@
 
         applyScore(ok, 10, q.type);
         setFeedback(feedback, ok, ok ? `🎯 ${getPositiveMessage()}` : `🙌 ${getTryMessage()}`, q.explanation);
-        lockAndShowNext();
+        finishQuestion(ok);
       };
 
       trueBtn.addEventListener("click", () => onPick(true));
@@ -2019,7 +2317,7 @@
 
         input.disabled = true;
         checkBtn.disabled = true;
-        lockAndShowNext();
+        finishQuestion(valid);
       };
 
       checkBtn.addEventListener("click", onCheck);
@@ -2103,7 +2401,7 @@
         );
 
         checkBtn.disabled = true;
-        lockAndShowNext();
+        finishQuestion(exact);
       });
 
       const note = document.createElement("p");
@@ -2198,7 +2496,7 @@
 
         disableButtons(orderWrap);
         checkBtn.disabled = true;
-        lockAndShowNext();
+        finishQuestion(ok);
       });
 
       const note = document.createElement("p");
@@ -2243,7 +2541,7 @@
             q.explanation
           );
 
-          lockAndShowNext();
+          finishQuestion(ok);
         });
 
         optionsWrap.appendChild(btn);
@@ -2322,7 +2620,7 @@
         });
 
         checkBtn.disabled = true;
-        lockAndShowNext();
+        finishQuestion(ok);
       });
 
       wrapper.appendChild(grid);
@@ -2459,7 +2757,7 @@
 
         disableButtons(layout);
         checkBtn.disabled = true;
-        lockAndShowNext();
+        finishQuestion(ok);
       });
 
       const note = document.createElement("p");
@@ -2526,7 +2824,7 @@
             q.explanation
           );
 
-          lockAndShowNext();
+          finishQuestion(ok);
         });
       });
 
@@ -2584,7 +2882,7 @@
 
         input.disabled = true;
         checkBtn.disabled = true;
-        lockAndShowNext();
+        finishQuestion(ok);
       };
 
       checkBtn.addEventListener("click", onCheck);
@@ -2793,6 +3091,7 @@
     btnExam.addEventListener("click", () => startGame("exam"));
     btnGeo.addEventListener("click", () => startGame("geo"));
     btnFormula.addEventListener("click", () => startGame("formula"));
+    btnWordbank.addEventListener("click", () => startGame("wordbank"));
     btnMarathon.addEventListener("click", () => startGame("marathon"));
 
     btnNext.addEventListener("click", nextQuestion);
